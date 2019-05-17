@@ -2,69 +2,59 @@
  *  새로운 일정 생성
  * ************** */
 var newEvent = function (start, end, eventType) {
-
-    $("#contextMenu").hide();
-    $('.eventType').text(eventType);
-    $('input#title').val("");
     $('#starts-at').val(start);
     $('#ends-at').val(end);
-    $('#add-event-desc').val("");
+
+    $("#contextMenu").hide(); //메뉴 숨김
+    $('#calendar-type').val(eventType).prop("selected", true); //선택한 메뉴에 따른 selectbox 수정
     $('#newEventModal').modal('show');
-    $('#calendar-type').val(eventType).prop("selected", true);
 
     /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
     var eventId = 1 + Math.floor(Math.random() * 1000);
     /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
 
-    $('#save-event').unbind();
     //새로운 일정 저장버튼 클릭
+    $('#save-event').unbind();
     $('#save-event').on('click', function () {
 
-        var title = $('input#title').val();
-        var startDay = $('#starts-at').val();
-        var endDay = $('#ends-at').val();
-        var displayEndDay = $('#ends-at').val();
-        var description = $('#add-event-desc').val();
-        var type = $('#calendar-type').val();
-        var selectColor = $('#add-color').val();
+        var eventData = {
+            _id: eventId,
+            title: $('input#title').val(),
+            start: $('#starts-at').val(),
+            end: $('#ends-at').val(),
+            description: $('#add-event-desc').val(),
+            type: $('#calendar-type').val(),
+            username: '사나',
+            backgroundColor:  $('#add-color').val(),
+            textColor: '#ffffff',
+            allDay: false
+        };
 
-        if (startDay > endDay) {
+        if (eventData.start > eventData.end) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
 
-        if (title === '') {
+        if (eventData.title === '') {
             alert('일정명은 필수입니다.');
             return false;
         }
 
-        var statusAllDay;
-        if ($(".allDayNewEvent").is(':checked')) {
-            startDay = moment(startDay).format('YYYY-MM-DD');
-            endDay = moment(endDay).format('YYYY-MM-DD');
-            displayEndDay = moment($('#ends-at').val()).add(1, 'days');
-            statusAllDay = true;
-        }
+        var realEndDay;
 
-        //sample data
-        //DB 연동시 ajax call 안으로
-        var eventData = {
-            _id: eventId,
-            title: title,
-            start: startDay,
-            end: displayEndDay,
-            description: description,
-            type: type,
-            username: '사나',
-            backgroundColor: selectColor,
-            textColor: '#ffffff',
-            allDay: statusAllDay
-        };
+        if ($(".allDayNewEvent").is(':checked')) {
+            eventData.start = moment(eventData.start).format('YYYY-MM-DD');
+            //render시 날짜표기수정
+            eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
+            //DB에 넣을때(선택)
+            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
+
+            eventData.allDay = true;
+        }
 
         $("#calendar").fullCalendar('renderEvent', eventData, true);
         $('#newEventModal').find('input, textarea').val('');
-        $('#newEventModal').find('input:checkbox').prop('checked', false);
-        $('#ends-at').prop('disabled', false);
+        $('#newEventModal').find('.allDayNewEvent').prop('checked', false);
         $('#newEventModal').modal('hide');
 
         //새로운 일정 저장

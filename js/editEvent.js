@@ -28,7 +28,6 @@ var editEvent = function (event, element, view) {
     $('#edit-event-desc').val(event.description);
     $('#edit-color').val(event.backgroundColor);
     $('#edit-color').css('color', event.backgroundColor);
-    $('.eventName').text(event.title);
     $('#editEventModal').modal('show');
 
     //업데이트 버튼 클릭시
