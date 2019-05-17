@@ -1,8 +1,8 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
-function getDisplayEventDate(event){
-  
+function getDisplayEventDate(event) {
+
   var displayEventDate;
 
   if (event.allDay == false) {
@@ -16,7 +16,7 @@ function getDisplayEventDate(event){
   return displayEventDate;
 }
 
-function filtering(event){
+function filtering(event) {
   var show_username = true;
   var show_type = true;
 
@@ -39,10 +39,10 @@ function filtering(event){
 }
 
 function calDateWhenResize(event) {
-  
+
   var newDates = {
-    startDate : '',
-    endDate : ''
+    startDate: '',
+    endDate: ''
   };
 
   if (event.allDay) {
@@ -56,39 +56,39 @@ function calDateWhenResize(event) {
   return newDates;
 }
 
-function calDateWhenDragnDrop(event){
-    // 드랍시 수정된 날짜반영
-    var newDates = {
-      startDate : '',
-      endDate : ''
-    }
+function calDateWhenDragnDrop(event) {
+  // 드랍시 수정된 날짜반영
+  var newDates = {
+    startDate: '',
+    endDate: ''
+  }
 
-    //하루짜리 all day
-    if (event.allDay && event.end === null) {
-      newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-      newDates.endDate = newDates.startDate;
-    }
+  //하루짜리 all day
+  if (event.allDay && event.end === null) {
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
+    newDates.endDate = newDates.startDate;
+  }
 
-    //2일이상 all day
-    else if (event.allDay && event.end !== null) {
-      newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-      newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
-    }
+  //2일이상 all day
+  else if (event.allDay && event.end !== null) {
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
+    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
+  }
 
-    //all day가 아님
-    else if (!event.allDay) {
-      newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-      newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
-    }
+  //all day가 아님
+  else if (!event.allDay) {
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
+  }
 
-    return newDates;
+  return newDates;
 }
 
 
 var calendar = $('#calendar').fullCalendar({
 
   eventRender: function (event, element, view) {
-    
+
     //일정에 hover시 요약
     element.popover({
       title: $('<div />', {
@@ -99,11 +99,11 @@ var calendar = $('#calendar').fullCalendar({
         'color': event.textColor
       }),
       content: $('<div />', {
-        class: 'popoverInfoCalendar'
-      }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
-      .append('<p><strong>구분:</strong> ' + event.type + '</p>')
-      .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
-      .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
+          class: 'popoverInfoCalendar'
+        }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
+        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
+        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
+        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
         hide: "50"
@@ -123,7 +123,7 @@ var calendar = $('#calendar').fullCalendar({
     viewWeekends: {
       text: '주말',
       click: function () {
-        activeInactiveWeekends? activeInactiveWeekends = false : activeInactiveWeekends = true;
+        activeInactiveWeekends ? activeInactiveWeekends = false : activeInactiveWeekends = true;
         $('#calendar').fullCalendar('option', {
           weekends: activeInactiveWeekends
         });
@@ -154,7 +154,7 @@ var calendar = $('#calendar').fullCalendar({
     }
   },
 
-    /* ****************
+  /* ****************
    *  일정 받아옴 
    * ************** */
   events: function (start, end, timezone, callback) {
@@ -168,7 +168,7 @@ var calendar = $('#calendar').fullCalendar({
         var fixedDate = response.map(function (array) {
           if (array.allDay && array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
-           array.end = moment(array.end).add(1, 'days');
+            array.end = moment(array.end).add(1, 'days');
           }
           return array;
         })
@@ -241,10 +241,10 @@ var calendar = $('#calendar').fullCalendar({
   },
 
   select: function (startDate, endDate, jsEvent, view) {
-    
+
     $(".fc-body").unbind('click');
     $(".fc-body").on('click', 'td', function (e) {
-      
+
       $("#contextMenu")
         .addClass("contextOpened")
         .css({
@@ -252,7 +252,7 @@ var calendar = $('#calendar').fullCalendar({
           left: e.pageX,
           top: e.pageY
         });
-        return false;
+      return false;
     });
 
     var today = moment();
@@ -279,21 +279,21 @@ var calendar = $('#calendar').fullCalendar({
     var $contextMenu = $("#contextMenu");
     $contextMenu.on("click", "a", function (e) {
       e.preventDefault();
-      
+
       //닫기 버튼이 아닐때
-      if( $(this).data().role !== 'close'){
-        newEvent(startDate, endDate, $(this).html());  
+      if ($(this).data().role !== 'close') {
+        newEvent(startDate, endDate, $(this).html());
       }
 
       $contextMenu.removeClass("contextOpened");
       $contextMenu.hide();
     });
 
-    $('body').on('click',function(){
+    $('body').on('click', function () {
       $contextMenu.removeClass("contextOpened");
       $contextMenu.hide();
     });
-    
+
   },
 
   //이벤트 클릭시 수정이벤트

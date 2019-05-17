@@ -1,5 +1,5 @@
 //SELECT 색 변경
-$('#add-color, #edit-color').change(function () {
+$('#edit-color').change(function () {
     $(this).css('color', $(this).val());
 });
 

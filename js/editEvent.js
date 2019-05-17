@@ -27,7 +27,7 @@ var editEvent = function (event, element, view) {
     editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
     editType.val(event.type);
     editDesc.val(event.description);
-    editColor.val(event.backgroundColor).css('color',event.backgroundColor);
+    editColor.val(event.backgroundColor).css('color', event.backgroundColor);
 
     addBtnContainer.hide();
     modifyBtnContainer.show();

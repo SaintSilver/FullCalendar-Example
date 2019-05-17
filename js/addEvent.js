@@ -17,9 +17,9 @@ var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
  *  새로운 일정 생성
  * ************** */
 var newEvent = function (start, end, eventType) {
-    
+
     $("#contextMenu").hide(); //메뉴 숨김
-    
+
     modalTitle.html('새로운 일정');
     editStart.val(start);
     editEnd.val(end);
@@ -85,7 +85,7 @@ var newEvent = function (start, end, eventType) {
                 //.....
             },
             success: function (response) {
-                
+
             }
         });
     });
