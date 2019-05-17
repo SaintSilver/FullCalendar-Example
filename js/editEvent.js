@@ -7,9 +7,9 @@ var editEvent = function (event, element, view) {
     $(element).popover("hide");
 
     if (event.allDay === true) {
-        $('.allDayEdit').prop('checked', true);
+        editAllDay.prop('checked', true);
     } else {
-        $('.allDayEdit').prop('checked', false);
+        editAllDay.prop('checked', false);
     }
 
     if (event.end === null) {
@@ -17,29 +17,32 @@ var editEvent = function (event, element, view) {
     }
 
     if (event.allDay === true && event.end !== event.start) {
-        $('#editEndDate').val(moment(event.end).subtract(1, 'days').format('YYYY-MM-DD HH:mm'))
+        editEnd.val(moment(event.end).subtract(1, 'days').format('YYYY-MM-DD HH:mm'))
     } else {
-        $('#editEndDate').val(event.end.format('YYYY-MM-DD HH:mm'));
+        editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
     }
 
-    $('#editTitle').val(event.title);
-    $('#editStartDate').val(event.start.format('YYYY-MM-DD HH:mm'));
-    $('#edit-calendar-type').val(event.type);
-    $('#edit-event-desc').val(event.description);
-    $('#edit-color').val(event.backgroundColor);
-    $('#edit-color').css('color', event.backgroundColor);
-    $('#editEventModal').modal('show');
+    modalTitle.html('일정 수정');
+    editTitle.val(event.title);
+    editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
+    editType.val(event.type);
+    editDesc.val(event.description);
+    editColor.val(event.backgroundColor).css('color',event.backgroundColor);
+
+    addBtnContainer.hide();
+    modifyBtnContainer.show();
+    eventModal.modal('show');
 
     //업데이트 버튼 클릭시
     $('#updateEvent').unbind();
     $('#updateEvent').on('click', function () {
 
-        if ($('#editStartDate').val() > $('#editEndDate').val()) {
+        if (editStart.val() > editEnd.val()) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
 
-        if ($('#editTitle').val() === '') {
+        if (editTitle.val() === '') {
             alert('일정명은 필수입니다.')
             return false;
         }
@@ -49,30 +52,27 @@ var editEvent = function (event, element, view) {
         var endDate;
         var displayDate;
 
-        if ($(".allDayEdit").is(':checked')) {
+        if (editAllDay.is(':checked')) {
             statusAllDay = true;
-            startDate = moment($('input#editStartDate').val()).format('YYYY-MM-DD');
-            endDate = moment($('input#editEndDate').val()).format('YYYY-MM-DD');
-            displayDate = moment($('input#editEndDate').val()).add(1, 'days').format('YYYY-MM-DD');
+            startDate = moment(editStart.val()).format('YYYY-MM-DD');
+            endDate = moment(editEnd.val()).format('YYYY-MM-DD');
+            displayDate = moment(editEnd.val()).add(1, 'days').format('YYYY-MM-DD');
         } else {
             statusAllDay = false;
-            startDate = $('input#editStartDate').val();
-            endDate = $('input#editEndDate').val();
+            startDate = editStart.val();
+            endDate = editEnd.val();
             displayDate = endDate;
         }
-        var title = $('input#editTitle').val();
-        var calendar = $('#edit-calendar-type').val();
-        var description = $('#edit-event-desc').val();
-        var selectColor = $('#edit-color').val();
 
-        $('#editEventModal').modal('hide');
-        event.title = title;
+        eventModal.modal('hide');
+
+        event.allDay = statusAllDay;
+        event.title = editTitle.val();
         event.start = startDate;
         event.end = displayDate;
-        event.type = calendar;
-        event.description = description;
-        event.allDay = statusAllDay;
-        event.backgroundColor = selectColor;
+        event.type = editType.val();
+        event.backgroundColor = editColor.val();
+        event.description = editDesc.val();
 
         $("#calendar").fullCalendar('updateEvent', event);
 
@@ -94,7 +94,7 @@ var editEvent = function (event, element, view) {
     $('#deleteEvent').on('click', function () {
         $('#deleteEvent').unbind();
         $("#calendar").fullCalendar('removeEvents', [event._id]);
-        $('#editEventModal').modal('hide');
+        eventModal.modal('hide');
 
         //삭제시
         $.ajax({

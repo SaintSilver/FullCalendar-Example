@@ -2,14 +2,15 @@ var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
 function getDisplayEventDate(event){
-  var startTimeEventInfo = moment(event.start).format('HH:mm');
-  var endTimeEventInfo = moment(event.end).format('HH:mm');
+  
   var displayEventDate;
 
   if (event.allDay == false) {
+    var startTimeEventInfo = moment(event.start).format('HH:mm');
+    var endTimeEventInfo = moment(event.end).format('HH:mm');
     displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
   } else {
-    displayEventDate = "All Day";
+    displayEventDate = "하루종일";
   }
 
   return displayEventDate;
