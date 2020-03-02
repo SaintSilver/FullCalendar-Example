@@ -63,6 +63,11 @@ function calDateWhenDragnDrop(event) {
     endDate: ''
   }
 
+  // 날짜 & 시간이 모두 같은 경우
+  if(!event.end) {
+    event.end = event.start;
+  }
+
   //하루짜리 all day
   if (event.allDay && event.end === null) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
