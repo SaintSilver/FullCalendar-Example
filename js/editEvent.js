@@ -3,6 +3,8 @@
  * ************** */
 var editEvent = function (event, element, view) {
 
+    $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
+
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -89,23 +91,23 @@ var editEvent = function (event, element, view) {
         });
 
     });
-
-    // 삭제버튼
-    $('#deleteEvent').on('click', function () {
-        $('#deleteEvent').unbind();
-        $("#calendar").fullCalendar('removeEvents', [event._id]);
-        eventModal.modal('hide');
-
-        //삭제시
-        $.ajax({
-            type: "get",
-            url: "",
-            data: {
-                //...
-            },
-            success: function (response) {
-                alert('삭제되었습니다.');
-            }
-        });
-    });
 };
+
+// 삭제버튼
+$('#deleteEvent').on('click', function () {
+    $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
+    eventModal.modal('hide');
+
+    //삭제시
+    $.ajax({
+        type: "get",
+        url: "",
+        data: {
+            //...
+        },
+        success: function (response) {
+            alert('삭제되었습니다.');
+        }
+    });
+
+});
