@@ -69,7 +69,8 @@ function calDateWhenDragnDrop(event) {
   }
 
   //하루짜리 all day
-  if (event.allDay && event.end === null) {
+  if (event.allDay && event.end === event.start) {
+    console.log('1111')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = newDates.startDate;
   }
