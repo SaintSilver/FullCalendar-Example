@@ -1,5 +1,5 @@
 body {
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
   padding: 30px;
 }
 
@@ -29,7 +29,7 @@ body {
 .popoverDescCalendar {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid #E3E3E3;
+  border-top: 1px solid #e3e3e3;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -92,7 +92,7 @@ body {
   font-size: 13px;
   font-weight: 500;
   color: #505363;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   padding: 11px 0px !important;
   text-decoration: none;
 }
@@ -127,7 +127,7 @@ body {
 }
 
 .fc-day:hover {
-  background: #EEF7FF;
+  background: #eef7ff;
   cursor: pointer;
   -webkit-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
@@ -135,7 +135,7 @@ body {
 }
 
 .fc-highlight {
-  background: #EEF7FF;
+  background: #eef7ff;
   opacity: 0.7;
 }
 
@@ -186,7 +186,7 @@ body {
 .fc-unthemed .fc-event .fc-content,
 .fc-unthemed .fc-event-dot .fc-content {
   padding: 5px 10px 5px 10px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin-left: -1px;
   height: 100%;
 }
@@ -214,7 +214,7 @@ body {
 .fc-unthemed td,
 .fc-unthemed th,
 .fc-unthemed thead {
-  border-color: #DADFEA;
+  border-color: #dadfea;
 }
 
 .fc-ltr .fc-h-event .fc-end-resizer,
@@ -234,14 +234,14 @@ select.filter {
 
 .popover {
   background: #fff !important;
-  color: #2E2F34;
+  color: #2e2f34;
   border: none;
   margin-bottom: 10px;
 }
 
 /*popover header*/
 .popover-title {
-  background: #F7F7FC;
+  background: #f7f7fc;
   font-weight: 600;
   padding: 15px 15px 11px;
   border: none;
@@ -269,7 +269,7 @@ select.filter {
 }
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -291,8 +291,8 @@ select.filter {
   -moz-osx-font-smoothing: grayscale;
 
   /* Support for IE. */
-  -webkit-font-feature-settings: 'liga';
-          font-feature-settings: 'liga';
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
 }
 
 #add-color,
